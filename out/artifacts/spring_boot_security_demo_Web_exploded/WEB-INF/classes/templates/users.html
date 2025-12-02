@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>
+    <th:block th:each="msg : ${users}">
+        <h1 th:text="${msg}"></h1>
+        <a th:href="@{/edit(id=${msg.id})}" class="btn">update</a>
+        <a th:href="@{/delUser(id=${msg.id})}" class="btn">delete</a>
+    </th:block>
+    <br/>
+    <sr/>
+    <button onclick="location.href='/new'">create</button>
+</div>
+</body>
+</html>
+<!DOCTYPE html>
+
