@@ -6,14 +6,26 @@
     <title></title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <div>
-    <form th:method="POST" th:action="@{/editUser}" th:object="${user}" >
-        <label for="name">name  </label>
+    <form th:method="POST" th:action="@{/admin/editUser}" th:object="${user}" >
+        <label for="name">firstname  </label>
         <input type="hidden" th:field="*{id}"/>
         <input type="text" th:field="*{firstName}" id="name">
-        <br/>
         <label for="lastname">surname </label>
         <input type="text" th:field="*{lastName}" id="lastname">
+        <label for="name">username  </label>
+        <input type="text" th:field="*{username}" id="username">
+        <label for="lastname">password </label>
+        <input type="password" th:field="*{password}" id="password" autocomplete="new-password" th:value="''">
+        <br/>
+        <div>
+            <label>Roles:</label>
+            <th:block th:each="role : ${listRoles}">
+                <input type="checkbox" th:field="*{roles}" th:value="${role.id}" />
+                <span th:text="${role}"></span>
+            </th:block>
+        </div>
         <br/>
         <input type="submit" value="update">
     </form>

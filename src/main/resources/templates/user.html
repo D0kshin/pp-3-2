@@ -4,6 +4,11 @@
     <title>Spring Security Example</title>
 </head>
 <body>
-<h1>user page</h1>
+<div th:replace="fragments/header :: header"></div>
+
+<h1>Страница пользователя!</h1>
+<th:block th:each="msg : ${user}">
+    <h1 th:text="${msg}"></h1>
+</th:block>
 </body>
 </html>

@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -23,37 +24,17 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private List<Role> roles;
 
     public User() {}
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     @Override
@@ -81,20 +62,21 @@ public class User implements UserDetails {
         return roles;
     }
 
-    public String getPassword() {
-        return password;
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public void setFirstName(String firstName) {
@@ -105,13 +87,37 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    @Override
-    public String toString() {
-        return new StringBuilder().append(firstName).append(", ").append(lastName).toString();
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public Long getId() {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append("Firstname: ").append(firstName)
+                .append(", Lastname: ").append(lastName)
+                .append(", Username: ").append(username)
+                .append(", roles: ").append(roles.stream().map(r -> r.getName()).collect(Collectors.joining(", ")))
+                .toString();
+    }
 }

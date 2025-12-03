@@ -10,6 +10,7 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -34,19 +35,22 @@ public class DataLoader implements CommandLineRunner {
         Role adminRole = new Role();
         adminRole.setName("ROLE_ADMIN");
 
+
         roleRepository.saveAll(Arrays.asList(userRole, adminRole));
 
         User user = new User();
+        user.setUsername("user");
         user.setFirstName("FirstUserName");
         user.setLastName("LastUserName");
         user.setPassword(passwordEncoder.encode("123"));
-        user.setRoles(Set.of(userRole));
+        user.setRoles(List.of(userRole));
 
         User admin = new User();
+        admin.setUsername("admin");
         admin.setFirstName("FirstAdminName");
         admin.setLastName("LastAdminName");
         admin.setPassword(passwordEncoder.encode("123"));
-        admin.setRoles(Set.of(adminRole));
+        admin.setRoles(List.of(adminRole));
 
         userRepository.saveAll(Arrays.asList(user, admin));
     }
