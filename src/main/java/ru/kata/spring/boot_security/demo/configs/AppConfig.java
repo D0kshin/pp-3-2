@@ -13,6 +13,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -20,7 +21,7 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:application.properties")
 @EnableTransactionManagement
-@ComponentScan(value = "ru.kata.spring.boot_security.demo")
+@ComponentScan(value = "ru.kata.spring.boot_security")
 public class AppConfig {
 
     private Environment env;
@@ -45,7 +46,7 @@ public class AppConfig {
     public LocalContainerEntityManagerFactoryBean getEntityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(getDataSource());
-        em.setPackagesToScan("web.model");
+        em.setPackagesToScan("ru.kata.spring.boot_security.demo.model");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setShowSql(true);
@@ -61,7 +62,7 @@ public class AppConfig {
     }
 
     @Bean
-    public PlatformTransactionManager getTransactionManager() {
-        return new JpaTransactionManager(getEntityManagerFactory().getObject());
+    public PlatformTransactionManager getTransactionManager(EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
     }
 }
