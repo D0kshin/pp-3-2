@@ -25,13 +25,11 @@ public class UserController {
 
     private final UserService userService;
     private final RoleService roleService;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService,  RoleService roleService,  PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService,  RoleService roleService) {
         this.roleService = roleService;
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping(value = "/admin")
@@ -69,20 +67,12 @@ public class UserController {
 
     @PostMapping("/admin/newUser")
     public String saveUser(@ModelAttribute("user") User user) {
-        if (user.getRoles().isEmpty()) {
-            user.setRoles(List.of(roleService.findByName("ROLE_USER")));
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.add(user);
         return "redirect:/admin";
     }
 
     @PostMapping("/admin/editUser")
     public String updateUser(@ModelAttribute("user") User user) {
-        if (user.getRoles().isEmpty()) {
-            user.setRoles(List.of(roleService.findByName("ROLE_USER")));
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.update(user);
         return "redirect:/admin";
     }
