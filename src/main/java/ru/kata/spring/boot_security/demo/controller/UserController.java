@@ -37,6 +37,8 @@ public class UserController {
     @GetMapping(value = "/admin")
     public String users(ModelMap model) {
         List<User> users = userService.findAll();
+        List<Role> roles = roleService.findAll();
+        model.addAttribute("listRoles", roles);
         model.addAttribute("users", users);
         return "users";
     }
