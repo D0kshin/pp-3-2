@@ -15,9 +15,9 @@
         <label for="lastname">surname </label>
         <input type="text" th:field="*{lastName}" id="lastname">
         <label for="name">username  </label>
-        <input type="text" th:field="*{username}" id="username">
+        <input type="text" th:field="*{username}" id="username" required>
         <label for="lastname">password </label>
-        <input type="password" th:field="*{password}" id="password" autocomplete="new-password" th:value="''">
+        <input type="password" th:field="*{password}" id="password" autocomplete="new-password" th:value="''" required>
         <br/>
         <div>
             <label>Roles:</label>
